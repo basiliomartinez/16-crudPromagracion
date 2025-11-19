@@ -12,14 +12,28 @@ import ProtectorRutas from "./components/routes/ProtectorRutas";
 
 function App() {
   const usuarioSessionStorage =
-    JSON.parse(sessionStorage.getItem("usuarioKey")) || false;
 
+
+
+  JSON.parse(sessionStorage.getItem("usuarioKey")) || false
   const [usuarioLogueado, setUsuarioLogueado] =
     useState(usuarioSessionStorage);
+
+const servicioLocalStorage=  JSON.parse(localStorage.getItem('serviciosKey')) || []
+
+const [servicios, setservicios]= useState([])
+
+
 
   useEffect(() => {
     sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
   }, [usuarioLogueado]);
+
+useEffect(()=>{
+  localStorage.setItem('servicioKey', JSON.stringify(servicios))
+}, [servicios])
+
+const crearServicio= ()=>{}
 
   return (
     <BrowserRouter>
