@@ -27,13 +27,37 @@ const [servicios, setservicios]= useState([])
 
   useEffect(() => {
     sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
-  }, [usuarioLogueado]);
+  }, [usuarioLogueado]);  
 
 useEffect(()=>{
   localStorage.setItem('servicioKey', JSON.stringify(servicios))
 }, [servicios])
 
-const crearServicio= ()=>{}
+ const crearServicio = (nuevoServicio)=>{
+// le voy agregar un id
+    nuevoServicio.id = crypto.randomUUID() //kdjfgh45-df454-dfjh34
+    setServicios([...servicios, nuevoServicio])
+  }
+
+  const editarServicio = (idServicio,servicioEditar) =>{
+    // buscar el objeto dentro del array que tiene tal id, y actualizar sus valores
+    const serviciosEditados = servicios.map((itemServicio)=>{
+      //buscar el objeto a editar
+       if(itemServicio.id === idServicio){
+         return {
+          ...itemServicio,
+          ...servicioEditar
+         }
+       }
+       return itemServicio 
+    })
+    setServicios(serviciosEditados)
+  }
+
+  const borrarServicio = (idServicio)=>{
+    const serviciosFiltrados = servicios.filter((itemServicio)=> itemServicio.id !== idServicio)
+    setServicios(serviciosFiltrados)
+  }
 
   return (
     <BrowserRouter>
@@ -57,7 +81,7 @@ const crearServicio= ()=>{}
           path="/administrador"
           element={<ProtectorRutas usuarioLogueado={usuarioLogueado} />}
         >
-          <Route index element={<Administrador />} />
+          <Route index element={<Administrador servicios={servicios} />} />
           <Route path="crear" element={<FormularioServicio />} />
           <Route path="editar" element={<FormularioServicio />} />
         </Route>

@@ -2,7 +2,7 @@ import Table from 'react-bootstrap/Table';
 import ItemTabla from '../services/ItemTabla';
 import { Button } from 'react-bootstrap';
 
-const Administrador = () => {
+const Administrador = (servicios) => {
     return (
     <main className='container my-4'>
         <div className='d-flex justify-content-between align-items-center'>
@@ -19,7 +19,8 @@ const Administrador = () => {
         </tr>
       </thead>
       <tbody>
-    <ItemTabla></ItemTabla>
+    {servicios.map((servicio)=><ItemTabla key={servicio.id} servicio={servicio}></ItemTabla>)
+}
     </tbody>
     </Table>
     </main>
